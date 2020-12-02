@@ -308,16 +308,8 @@ export class HalfedgeMesh {
     }
 
     createHalfEdges(faceValues, face) {
-        let faceVertexIds = []
         let faceVertices = []
-        //v: 0 vt: 1 vn: 2
-        faceValues.forEach((value) => {
-            faceVertexIds.push(value.split("/"))
-        })
-
-        faceVertexIds.forEach((vertexId) => {
-            faceVertices.push(this.vertices[vertexId[0] - 1])
-        })
+        this.extractVertices(faceValues, faceVertices);
 
         let createdHalfEdges = []
 
@@ -366,6 +358,19 @@ export class HalfedgeMesh {
         }
 
         return createdHalfEdges
+    }
+
+    extractVertices(faceValues, faceVertices) {
+        let faceVertexIds = []
+
+        //v: 0 vt: 1 vn: 2
+        faceValues.forEach((value) => {
+            faceVertexIds.push(value.split("/"))
+        })
+
+        faceVertexIds.forEach((vertexId) => {
+            faceVertices.push(this.vertices[vertexId[0] - 1])
+        })
     }
 
     linkCreatedHalfEdges(createdHalfEdges) {
